@@ -30,7 +30,7 @@ Follwing procedures are required only at once.
    ```
    python3 res.py
 ## addtional info
-### chromedrive memo
+### Install/Update chromedrive
 1. Install ChromeDriver. Note: the version of ChromeDriver need to be same with that of Chrome.
 Ref: ChromeDriver Download Page
 ```
@@ -51,7 +51,7 @@ click Allow Anyway botton
 $brew update
 $brew upgrade chromedriver
 ```
-### self memo
+### self memo (TODO)
 - Account loop has not been verified.
 - Unoki only specification.
 - Assuming that the time frame of Unoki is 06/08/10/12/14/16.
