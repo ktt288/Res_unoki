@@ -44,11 +44,13 @@ Ref: ChromeDriver Download Page
 ```
 $brew install --cask chromedriver
 $brew info chromedriver
+```
 2. Check PATH for ChromeDriver.
 If not found, add 'export PATH="/usr/local/bin:$PATH"' to '~/.zshrc', then run '$source ~/.zshrc'. If not yet solved, reinstall ChromeDriver.
 ```
 $which chromedriver
 /usr/local/bin/chromedriver
+```
 3. You may have to change Privacy & Security settings to enable ChromeDriver.
 click Allow Anyway botton
 
