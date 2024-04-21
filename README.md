@@ -29,15 +29,7 @@ Follwing procedures are required only at once.
 3. Run:
    ```
    python3 res.py
-### self memo
-- Account loop has not been verified.
-- Unoki only specification.
-- Assuming that the time frame of Unoki is 06/08/10/12/14/16.
-    January, November, December: 8 a.m. to 4 p.m.
-    February, March, September, October: 7 a.m. to 5 p.m.
-    April to August: 6 a.m. to 6 p.m.
-    -> Program correction is required before making reservations for September and November.
-
+## addtional info
 ### chromedrive memo
 1. Install ChromeDriver. Note: the version of ChromeDriver need to be same with that of Chrome.
 Ref: ChromeDriver Download Page
@@ -58,3 +50,13 @@ click Allow Anyway botton
 ```
 $brew update
 $brew upgrade chromedriver
+```
+### self memo
+- Account loop has not been verified.
+- Unoki only specification.
+- Assuming that the time frame of Unoki is 06/08/10/12/14/16.
+    January, November, December: 8 a.m. to 4 p.m.
+    February, March, September, October: 7 a.m. to 5 p.m.
+    April to August: 6 a.m. to 6 p.m.
+    -> Program correction is required before making reservations for September and November.
+
