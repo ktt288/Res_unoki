@@ -6,8 +6,8 @@ Reserve Unoki-kyugijyo from the input date-time range list and account list.
 
 The only things you need to prepare are:
 
-- datelist(formated)
-- accountlist(formated)
+- datelist.txt(formated)
+- accountlist.csv(formated)
 
 ## getting started
 ### pre-requirements
