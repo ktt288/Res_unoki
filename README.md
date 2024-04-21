@@ -19,8 +19,8 @@ Follwing procedures are required only at once.
 
 1. Get resources
    ```
-   $ git clone ssh://xxx
-   $ cd xxx
+   $ git clone git@github.com:ktt288/Res_unoki.git
+   $ cd Res_unoki
 
 ### Run
 1. Edit the datalist.txt and accountlist.csv files, making sure to adhere to the formatting rules.
