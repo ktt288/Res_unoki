@@ -41,17 +41,18 @@ Follwing procedures are required only at once.
 ### chromedrive memo
 1. Install ChromeDriver. Note: the version of ChromeDriver need to be same with that of Chrome.
 Ref: ChromeDriver Download Page
+```
 $brew install --cask chromedriver
 $brew info chromedriver
-
-1. Check PATH for ChromeDriver.
+2. Check PATH for ChromeDriver.
 If not found, add 'export PATH="/usr/local/bin:$PATH"' to '~/.zshrc', then run '$source ~/.zshrc'. If not yet solved, reinstall ChromeDriver.
+```
 $which chromedriver
 /usr/local/bin/chromedriver
-
-1. You may have to change Privacy & Security settings to enable ChromeDriver.
+3. You may have to change Privacy & Security settings to enable ChromeDriver.
 click Allow Anyway botton
 
-1. To get the latest ChromeDriver, e.g., when you update Chrome, run the following commands.
+4. To get the latest ChromeDriver, e.g., when you update Chrome, run the following commands.
+```
 $brew update
 $brew upgrade chromedriver
