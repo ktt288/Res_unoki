@@ -21,13 +21,14 @@ Follwing procedures are required only at once.
    ```
    $ git clone git@github.com:ktt288/Res_unoki.git
    $ cd Res_unoki
-
 ### Run
-1. Edit the datalist.txt and accountlist.csv files, making sure to adhere to the formatting rules.
-2. Run:
+1. Edit the datelist.txt and accountlist.csv files, making sure to adhere to the formatting rules.
+   ```
+   $ vi datelist.txt
+   $ vi accountlist.csv
+3. Run:
    ```
    python3 res.py
-
 ### self memo
 - Account loop has not been verified.
 - Unoki only specification.
