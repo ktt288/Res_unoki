@@ -30,7 +30,7 @@ Follwing procedures are required only at once.
 2. Run:(for reservation)
    ```
    python3 res.py
-3. Check Run:(for get capture)
+3. Check Run:(get capture of reservation list)
    ```
    python3 res_check.py
    
