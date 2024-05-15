@@ -3,6 +3,7 @@
 Reserve Unoki-kyugijyo from the input date-time range list and account list.
 
 - You can reserve Unoki-kyugijyo by combining the date and time list for reservations with the account list.
+- You can also get a capture of the reservation list.
 
 The only things you need to prepare are:
 
@@ -26,9 +27,13 @@ Follwing procedures are required only at once.
    ```
    $ vi datelist.txt
    $ vi accountlist.csv
-3. Run:
+2. Run:(for reservation)
    ```
    python3 res.py
+3. Check Run:(for get capture)
+   ```
+   python3 res_check.py
+   
 ## addtional info
 ### Install/Update chromedrive
 1. Install ChromeDriver. Note: the version of ChromeDriver need to be same with that of Chrome.
