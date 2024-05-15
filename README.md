@@ -57,7 +57,6 @@ $brew update
 $brew upgrade chromedriver
 ```
 ### self memo (TODO)
-- Account loop has not been verified.
 - Unoki only specification.
 - Assuming that the time frame of Unoki is 06/08/10/12/14/16.
     January, November, December: 8 a.m. to 4 p.m.
