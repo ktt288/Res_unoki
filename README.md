@@ -33,6 +33,13 @@ Follwing procedures are required only at once.
 3. Check Run:(get capture of reservation list)
    ```
    python3 res_check.py
+4. Winning Check Run:(Winning check and resevation fix)
+   ```
+   python3 winning_check.py
+5. Final Check Run:(get capture of reservation fix list)
+   ```
+   python3 res_check.py
+   
 ## addtional info
 ### Install/Update chromedrive
 1. Install ChromeDriver. Note: the version of ChromeDriver need to be same with that of Chrome.
