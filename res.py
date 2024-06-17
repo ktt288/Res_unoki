@@ -186,7 +186,7 @@ if __name__ == "__main__":
                                 by=By.XPATH,
                                 value='/html/body/form[2]/main/div[3]/div/div[3]/button',
                             ).click()
-                            time.sleep(3)
+                            time.sleep(6)
 
                             # 抽選申し込みを続けるボタンを押す
                             driver.find_element(
