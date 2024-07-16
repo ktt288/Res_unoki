@@ -159,28 +159,28 @@ if __name__ == "__main__":
                             # 31日間 ボタンを押す
                             driver.find_element(
                                 by=By.XPATH,
-                                value='/html/body/form[2]/main/div[3]/div[1]/div[3]/ul/li[2]/fieldset/ul/li[2]/label',
+                                value='/html/body/form[2]/main/div[3]/div[2]/div[3]/ul/li[2]/fieldset/ul/li[2]/label',
                             ).click()
                             time.sleep(1)
 
                             # 選択した条件で表示 ボタンを押す
                             driver.find_element(
                                 by=By.XPATH,
-                                value='/html/body/form[2]/main/div[3]/div[1]/div[3]/button',
+                                value='/html/body/form[2]/main/div[3]/div[2]/div[3]/button',
                             ).click()
                             time.sleep(1)
 
                             # 選択した条件で表示する ボタンを押す
                             driver.find_element(
                                 by=By.XPATH,
-                                value='/html/body/form[2]/main/div[3]/div[1]/div[3]/div/div/button[1]',
+                                value='/html/body/form[2]/main/div[3]/div[2]/div[3]/div/div/button[1]',
                             ).click()
                             time.sleep(1)
 
                             # 日時ボタンを押す
                             driver.find_element(
                                 by=By.XPATH,
-                                value='/html/body/form[2]/main/div[3]/div[1]/div[4]/ul/li/div[2]/table/tbody/tr[' + str(time_part) + ']/td[' + str(last_two_digits) + ']/label',
+                                value='/html/body/form[2]/main/div[3]/div[2]/div[4]/ul/li/div[3]/table/tbody/tr[' + str(time_part) + ']/td[' + str(last_two_digits) + ']/label',
                             ).click()
                             time.sleep(1)
 
@@ -201,7 +201,7 @@ if __name__ == "__main__":
                             # 抽選申し込みを続けるボタンを押す
                             driver.find_element(
                                 by=By.XPATH,
-                                value='/html/body/form[2]/main/div[3]/div[3]/button[1]',
+                                value='/html/body/form[2]/main/div[3]/div[2]/button[1]',
                             ).click()
                             time.sleep(3)
 
