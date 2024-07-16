@@ -132,13 +132,23 @@ if __name__ == "__main__":
                             # 条件分岐を使用して変数をセット
                             if columns[1] == '06':
                                 time_part = 2
+                            elif columns[1] == '07':
+                                time_part = 2
                             elif columns[1] == '08':
+                                time_part = 3
+                            elif columns[1] == '09':
                                 time_part = 3
                             elif columns[1] == '10':
                                 time_part = 4
+                            elif columns[1] == '11':
+                                time_part = 4
                             elif columns[1] == '12':
                                 time_part = 5
+                            elif columns[1] == '13':
+                                time_part = 5
                             elif columns[1] == '14':
+                                time_part = 6
+                            elif columns[1] == '15':
                                 time_part = 6
                             elif columns[1] == '16':
                                 time_part = 7
