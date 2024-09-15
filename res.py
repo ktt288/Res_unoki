@@ -126,35 +126,66 @@ if __name__ == "__main__":
                             last_two_digits = first_column[-2:]
                             if last_two_digits[0] == '0':
                                 last_two_digits = last_two_digits[1]
+                            # 何月？をlast_four_digitsに格納する。
+                            last_four_digits = first_column[4:6]
+                            if last_four_digits[0] == '0':
+                                last_four_digits = last_four_digits[1]
 
-                            # 何枠目？をtime_partに格納する。
-                            time_part = None
-                            # 条件分岐を使用して変数をセット
-                            if columns[1] == '06':
-                                time_part = 2
-                            elif columns[1] == '07':
-                                time_part = 2
-                            elif columns[1] == '08':
-                                time_part = 3
-                            elif columns[1] == '09':
-                                time_part = 3
-                            elif columns[1] == '10':
-                                time_part = 4
-                            elif columns[1] == '11':
-                                time_part = 4
-                            elif columns[1] == '12':
-                                time_part = 5
-                            elif columns[1] == '13':
-                                time_part = 5
-                            elif columns[1] == '14':
-                                time_part = 6
-                            elif columns[1] == '15':
-                                time_part = 6
-                            elif columns[1] == '16':
-                                time_part = 7
+                            # 11,12,1月の場合
+                            if int(last_four_digits) in [11, 12, 1]:
+                                # 何枠目？をtime_partに格納する。
+                                time_part = None
+                                # 条件分岐を使用して変数をセット
+                                if columns[1] == '08':
+                                    time_part = 2
+                                elif columns[1] == '09':
+                                    time_part = 2
+                                elif columns[1] == '10':
+                                    time_part = 3
+                                elif columns[1] == '11':
+                                    time_part = 3
+                                elif columns[1] == '12':
+                                    time_part = 4
+                                elif columns[1] == '13':
+                                    time_part = 4
+                                elif columns[1] == '14':
+                                    time_part = 5
+                                elif columns[1] == '15':
+                                    time_part = 5
+                                elif columns[1] == '16':
+                                    time_part = 6
+                                else:
+                                    # 条件に該当しない場合、デフォルト値をセットする
+                                    time_part = None  # 必要に応じて他の値に変更
                             else:
-                                # 条件に該当しない場合、デフォルト値をセットする
-                                time_part = None  # 必要に応じて他の値に変更
+                                # 何枠目？をtime_partに格納する。
+                                time_part = None
+                                # 条件分岐を使用して変数をセット
+                                if columns[1] == '06':
+                                    time_part = 2
+                                elif columns[1] == '07':
+                                    time_part = 2
+                                elif columns[1] == '08':
+                                    time_part = 3
+                                elif columns[1] == '09':
+                                    time_part = 3
+                                elif columns[1] == '10':
+                                    time_part = 4
+                                elif columns[1] == '11':
+                                    time_part = 4
+                                elif columns[1] == '12':
+                                    time_part = 5
+                                elif columns[1] == '13':
+                                    time_part = 5
+                                elif columns[1] == '14':
+                                    time_part = 6
+                                elif columns[1] == '15':
+                                    time_part = 6
+                                elif columns[1] == '16':
+                                    time_part = 7
+                                else:
+                                    # 条件に該当しない場合、デフォルト値をセットする
+                                    time_part = None  # 必要に応じて他の値に変更
 
                             # 31日間 ボタンを押す
                             driver.find_element(
