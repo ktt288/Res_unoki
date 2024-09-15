@@ -62,10 +62,4 @@ click Allow Anyway botton
 $brew update
 $brew upgrade chromedriver
 ```
-### self memo (TODO)
-- Assuming that the time frame of Unoki is 06/08/10/12/14/16.
-    January, November, December: 8 a.m. to 4 p.m.
-    February, March, September, October: 7 a.m. to 5 p.m. -> Done
-    April to August: 6 a.m. to 6 p.m. -> Done
-    -> Program correction is required before making reservations for September and November.
 
