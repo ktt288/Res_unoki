@@ -51,7 +51,7 @@ def _login(page, account_id, password, q):
     page.wait_for_load_state('networkidle')
     page.fill('#txtRiyoshaCode', account_id)
     page.fill('#txtPassWord', password)
-    page.click('/html/body/main/div/form/div[1]/div/button')
+    page.click('xpath=/html/body/main/div/form/div[1]/div/button')
     page.wait_for_load_state('networkidle')
 
 
@@ -99,11 +99,11 @@ def run_reserve(account_text, date_text, log_queue):
                 _login(page, account_id, password, log_queue)
 
                 # 抽選申し込みを選択
-                page.click('/html/body/main/div/form/div[4]/ul/li[1]/div[2]/ul/li[2]/label')
+                page.click('xpath=/html/body/main/div/form/div[4]/ul/li[1]/div[2]/ul/li[2]/label')
                 page.wait_for_timeout(1000)
 
                 # 大田区公園グループを選択
-                page.click('/html/body/main/div/form/div[4]/ul/li[3]/div[2]/ul/li[4]/label')
+                page.click('xpath=/html/body/main/div/form/div[4]/ul/li[3]/div[2]/ul/li[4]/label')
                 page.wait_for_timeout(1000)
 
                 # 選択した条件で次へ
@@ -138,15 +138,15 @@ def run_reserve(account_text, date_text, log_queue):
                             continue
 
                         # 31日間
-                        page.click('/html/body/form[2]/main/div[3]/div[2]/div[3]/ul/li[2]/fieldset/ul/li[2]/label')
+                        page.click('xpath=/html/body/form[2]/main/div[3]/div[2]/div[3]/ul/li[2]/fieldset/ul/li[2]/label')
                         page.wait_for_timeout(1000)
 
                         # 選択した条件で表示
-                        page.click('/html/body/form[2]/main/div[3]/div[2]/div[3]/button')
+                        page.click('xpath=/html/body/form[2]/main/div[3]/div[2]/div[3]/button')
                         page.wait_for_timeout(1000)
 
                         # 選択した条件で表示する
-                        page.click('/html/body/form[2]/main/div[3]/div[2]/div[3]/div/div/button[1]')
+                        page.click('xpath=/html/body/form[2]/main/div[3]/div[2]/div[3]/div/div/button[1]')
                         page.wait_for_timeout(1000)
 
                         # 日時セルをクリック
@@ -160,12 +160,12 @@ def run_reserve(account_text, date_text, log_queue):
                         page.wait_for_load_state('networkidle')
 
                         # 申し込み内容確定
-                        page.click('/html/body/form[2]/main/div[3]/div/div[3]/button')
+                        page.click('xpath=/html/body/form[2]/main/div[3]/div/div[3]/button')
                         page.wait_for_load_state('networkidle')
                         page.wait_for_timeout(3000)
 
                         # 抽選申し込みを続ける
-                        page.click('/html/body/form[2]/main/div[3]/div[2]/button[1]')
+                        page.click('xpath=/html/body/form[2]/main/div[3]/div[2]/button[1]')
                         page.wait_for_load_state('networkidle')
 
                         _log(log_queue, f'    申し込み完了', 'success')
