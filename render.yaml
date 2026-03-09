@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: res-unoki
+    runtime: python
+    rootDir: webapp
+    buildCommand: pip install -r requirements.txt && playwright install chromium --with-deps
+    startCommand: gunicorn app:app --threads 4 --timeout 300 --bind 0.0.0.0:$PORT
+    plan: free
+    envVars:
+      - key: PYTHONUNBUFFERED
+        value: "1"
+      - key: SECRET_KEY
+        generateValue: true

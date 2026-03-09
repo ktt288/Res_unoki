@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>鵜の木球技場 予約システム</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Hiragino Sans', 'Meiryo', sans-serif;
+      background: #f4f6f9;
+      color: #333;
+      min-height: 100vh;
+    }
+
+    header {
+      background: #1a6e35;
+      color: #fff;
+      padding: 16px 24px;
+    }
+    header h1 { font-size: 1.3rem; font-weight: bold; }
+    header p { font-size: 0.85rem; opacity: 0.85; margin-top: 4px; }
+
+    .container { max-width: 800px; margin: 24px auto; padding: 0 16px; }
+
+    /* タブ */
+    .tabs {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 0;
+    }
+    .tab-btn {
+      flex: 1;
+      padding: 12px 8px;
+      border: none;
+      border-radius: 8px 8px 0 0;
+      background: #dce8df;
+      color: #1a6e35;
+      font-size: 0.9rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .tab-btn:hover { background: #c3d9c9; }
+    .tab-btn.active { background: #fff; color: #1a6e35; border-bottom: 3px solid #1a6e35; }
+
+    /* タブコンテンツ */
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    .card {
+      background: #fff;
+      border-radius: 0 0 8px 8px;
+      padding: 24px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    }
+
+    .card h2 { font-size: 1.1rem; margin-bottom: 8px; color: #1a6e35; }
+    .card .desc { font-size: 0.85rem; color: #666; margin-bottom: 20px; line-height: 1.6; }
+
+    .form-group { margin-bottom: 16px; }
+    .form-group label {
+      display: block;
+      font-size: 0.88rem;
+      font-weight: bold;
+      margin-bottom: 6px;
+    }
+    .form-group textarea {
+      width: 100%;
+      height: 120px;
+      padding: 10px 12px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 0.88rem;
+      font-family: 'Courier New', monospace;
+      resize: vertical;
+      line-height: 1.6;
+    }
+    .form-group textarea:focus {
+      outline: none;
+      border-color: #1a6e35;
+      box-shadow: 0 0 0 2px rgba(26,110,53,0.15);
+    }
+    .hint { font-size: 0.78rem; color: #888; margin-top: 4px; }
+
+    .run-btn {
+      display: block;
+      width: 100%;
+      padding: 14px;
+      background: #1a6e35;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.15s;
+      margin-top: 8px;
+    }
+    .run-btn:hover:not(:disabled) { background: #145929; }
+    .run-btn:disabled { background: #8ab89a; cursor: not-allowed; }
+
+    /* ログエリア */
+    .log-section { margin-top: 24px; }
+    .log-section h3 {
+      font-size: 0.95rem;
+      font-weight: bold;
+      margin-bottom: 8px;
+      color: #444;
+    }
+    #log-output {
+      background: #1e1e1e;
+      color: #d4d4d4;
+      border-radius: 8px;
+      padding: 16px;
+      height: 260px;
+      overflow-y: auto;
+      font-family: 'Courier New', monospace;
+      font-size: 0.82rem;
+      line-height: 1.7;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    .log-info    { color: #d4d4d4; }
+    .log-success { color: #6bcf6b; }
+    .log-error   { color: #f47a7a; }
+    .log-warning { color: #f0c040; }
+    .log-system  { color: #888; font-style: italic; }
+
+    /* スクリーンショット */
+    #screenshot-section { margin-top: 24px; display: none; }
+    #screenshot-section h3 { font-size: 0.95rem; font-weight: bold; margin-bottom: 12px; color: #444; }
+    .screenshot-grid { display: flex; flex-wrap: wrap; gap: 12px; }
+    .screenshot-item { text-align: center; }
+    .screenshot-item img {
+      max-width: 340px;
+      width: 100%;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      display: block;
+    }
+    .screenshot-item p { font-size: 0.8rem; color: #666; margin-top: 6px; }
+
+    /* ステータスバー */
+    #status-bar {
+      display: none;
+      align-items: center;
+      gap: 10px;
+      background: #fff8e1;
+      border: 1px solid #f0c040;
+      border-radius: 6px;
+      padding: 10px 14px;
+      margin-top: 16px;
+      font-size: 0.88rem;
+      color: #7a5c00;
+    }
+    .spinner {
+      width: 18px; height: 18px;
+      border: 3px solid #f0c040;
+      border-top-color: #7a5c00;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      flex-shrink: 0;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>鵜の木球技場 予約システム</h1>
+  <p>うぐいすねっとへの自動予約をブラウザから実行できます</p>
+</header>
+
+<div class="container">
+
+  <!-- タブ -->
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="reserve">① 予約申し込み</button>
+    <button class="tab-btn" data-tab="check">② 予約確認</button>
+    <button class="tab-btn" data-tab="winning">③ 当選確定</button>
+  </div>
+
+  <!-- ① 予約申し込み -->
+  <div id="tab-reserve" class="tab-content active">
+    <div class="card">
+      <h2>抽選予約申し込み</h2>
+      <p class="desc">
+        アカウントと申し込む日時を入力して「実行」ボタンを押してください。<br>
+        各アカウントでログインし、指定したすべての日時枠に抽選申し込みします。
+      </p>
+      <div class="form-group">
+        <label>アカウントリスト（1行に 1アカウント）</label>
+        <textarea id="reserve-accounts" placeholder="利用者コード,パスワード&#10;例:&#10;123456,mypassword&#10;789012,otherpass"></textarea>
+        <p class="hint">書式: 利用者コード,パスワード</p>
+      </div>
+      <div class="form-group">
+        <label>日時リスト（1行に 1日時）</label>
+        <textarea id="reserve-dates" placeholder="YYYYMMDD_HH&#10;例:&#10;20240602_08&#10;20240602_10&#10;20240609_12"></textarea>
+        <p class="hint">書式: 年月日_開始時刻2桁（例: 20240602_08 = 2024年6月2日 8時枠）</p>
+      </div>
+      <button class="run-btn" id="reserve-btn" onclick="runTask('reserve')">申し込みを実行する</button>
+    </div>
+  </div>
+
+  <!-- ② 予約確認 -->
+  <div id="tab-check" class="tab-content">
+    <div class="card">
+      <h2>申し込み内容確認</h2>
+      <p class="desc">
+        各アカウントでログインし、申し込み内容の一覧画面をスクリーンショットで取得します。<br>
+        抽選結果の確認などにご利用ください。
+      </p>
+      <div class="form-group">
+        <label>アカウントリスト（1行に 1アカウント）</label>
+        <textarea id="check-accounts" placeholder="利用者コード,パスワード&#10;例:&#10;123456,mypassword"></textarea>
+        <p class="hint">書式: 利用者コード,パスワード</p>
+      </div>
+      <button class="run-btn" id="check-btn" onclick="runTask('check')">確認を実行する</button>
+    </div>
+  </div>
+
+  <!-- ③ 当選確定 -->
+  <div id="tab-winning" class="tab-content">
+    <div class="card">
+      <h2>当選確認・予約確定</h2>
+      <p class="desc">
+        各アカウントの抽選結果を確認し、「当選」している場合は利用規約に同意して予約を確定します。<br>
+        当選しているコマが複数ある場合は、1件ずつ処理します。
+      </p>
+      <div class="form-group">
+        <label>アカウントリスト（1行に 1アカウント）</label>
+        <textarea id="winning-accounts" placeholder="利用者コード,パスワード&#10;例:&#10;123456,mypassword"></textarea>
+        <p class="hint">書式: 利用者コード,パスワード</p>
+      </div>
+      <button class="run-btn" id="winning-btn" onclick="runTask('winning')">当選確定を実行する</button>
+    </div>
+  </div>
+
+  <!-- ステータスバー -->
+  <div id="status-bar">
+    <div class="spinner"></div>
+    <span id="status-text">処理中...</span>
+  </div>
+
+  <!-- ログ -->
+  <div class="log-section">
+    <h3>実行ログ</h3>
+    <div id="log-output"><span class="log-system">ここに実行結果が表示されます</span></div>
+  </div>
+
+  <!-- スクリーンショット -->
+  <div id="screenshot-section">
+    <h3>スクリーンショット</h3>
+    <div id="screenshot-grid" class="screenshot-grid"></div>
+  </div>
+
+</div><!-- /container -->
+
+<script>
+  // タブ切り替え
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+    });
+  });
+
+  let currentSource = null;
+
+  function runTask(type) {
+    // 入力取得
+    const accountsEl = document.getElementById(type + '-accounts');
+    const datesEl    = document.getElementById(type + '-dates');
+    const accounts   = accountsEl ? accountsEl.value.trim() : '';
+    const dates      = datesEl    ? datesEl.value.trim()    : '';
+
+    if (!accounts) { alert('アカウントリストを入力してください'); return; }
+    if ((type === 'reserve') && !dates) { alert('日時リストを入力してください'); return; }
+
+    // 前のSSEを切断
+    if (currentSource) { currentSource.close(); currentSource = null; }
+
+    // UI初期化
+    clearLog();
+    hideScreenshots();
+    setRunning(true);
+
+    // FormData構築
+    const fd = new FormData();
+    fd.append('accounts', accounts);
+    if (dates) fd.append('dates', dates);
+
+    fetch('/api/' + type, { method: 'POST', body: fd })
+      .then(r => r.json())
+      .then(data => {
+        if (!data.task_id) { appendLog('エラー: タスク開始失敗', 'error'); setRunning(false); return; }
+        startStream(data.task_id);
+      })
+      .catch(e => { appendLog('通信エラー: ' + e, 'error'); setRunning(false); });
+  }
+
+  function startStream(taskId) {
+    currentSource = new EventSource('/api/stream/' + taskId);
+
+    currentSource.onmessage = (e) => {
+      const msg = JSON.parse(e.data);
+
+      if (msg.type === 'heartbeat') return;
+
+      if (msg.type === 'screenshots') {
+        showScreenshots(taskId, msg.files);
+        return;
+      }
+
+      if (msg.type === 'done') {
+        setRunning(false);
+        currentSource.close();
+        currentSource = null;
+        return;
+      }
+
+      appendLog(msg.message || '', msg.type);
+    };
+
+    currentSource.onerror = () => {
+      appendLog('接続が切断されました', 'warning');
+      setRunning(false);
+      if (currentSource) { currentSource.close(); currentSource = null; }
+    };
+  }
+
+  function appendLog(text, type) {
+    const out = document.getElementById('log-output');
+    const span = document.createElement('span');
+    span.className = 'log-' + (type || 'info');
+    span.textContent = text + '\n';
+    out.appendChild(span);
+    out.scrollTop = out.scrollHeight;
+  }
+
+  function clearLog() {
+    document.getElementById('log-output').innerHTML = '';
+  }
+
+  function setRunning(running) {
+    document.querySelectorAll('.run-btn').forEach(btn => btn.disabled = running);
+    const bar = document.getElementById('status-bar');
+    bar.style.display = running ? 'flex' : 'none';
+    document.getElementById('status-text').textContent = running ? '処理中... しばらくお待ちください' : '';
+  }
+
+  function showScreenshots(taskId, files) {
+    const section = document.getElementById('screenshot-section');
+    const grid    = document.getElementById('screenshot-grid');
+    grid.innerHTML = '';
+    if (!files || files.length === 0) return;
+
+    files.forEach(filename => {
+      const div = document.createElement('div');
+      div.className = 'screenshot-item';
+      const img = document.createElement('img');
+      img.src = `/api/screenshot/${taskId}/${filename}`;
+      img.alt = filename;
+      const p = document.createElement('p');
+      p.textContent = filename;
+      div.appendChild(img);
+      div.appendChild(p);
+      grid.appendChild(div);
+    });
+
+    section.style.display = 'block';
+  }
+
+  function hideScreenshots() {
+    document.getElementById('screenshot-section').style.display = 'none';
+    document.getElementById('screenshot-grid').innerHTML = '';
+  }
+</script>
+</body>
+</html>

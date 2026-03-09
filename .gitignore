@@ -1,0 +1,15 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# スクリーンショット（実行時に生成）
+webapp/screenshots/
+
+# macOS
+.DS_Store
+
+# 環境変数
+.env
